@@ -1,0 +1,30 @@
+.buttonResults {
+  width: 95px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--button-green);
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  justify-self: end;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.buttonFinalize {
+  width: 95px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--button-gray);
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  justify-self: end;
+  &:hover {
+    cursor: pointer;
+  }
+}

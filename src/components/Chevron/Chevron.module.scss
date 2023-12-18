@@ -1,0 +1,29 @@
+.sortButton {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  background-color: transparent;
+  padding-left: 8px;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.sortButton2 {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  background-color: transparent;
+  transform: rotate(180deg);
+  padding-right: 8px;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.chevron {
+  width: 7px;
+  height: 4px;
+}

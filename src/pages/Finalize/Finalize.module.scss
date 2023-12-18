@@ -1,0 +1,21 @@
+.container {
+  height: 100vh;
+  max-height: 790px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title {
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--header-text-color);
+}
+.subTitle {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--header-text-color);
+}
