@@ -28,26 +28,22 @@
   display: grid;
   grid-template-columns: minmax(180px, 389px) minmax(80px, 100px) 62px 123px 1fr;
   align-items: baseline;
-  // grid-template-columns: repeat(5, 1fr);
   column-gap: 25px;
   width: 100%;
 
   margin: 15px 11px 12px;
 }
 .name {
-  // height: 40px;
   font-size: 13px;
   font-weight: 500;
   color: var(--item-name-text-color);
 }
 .type {
-  // height: 30px;
   font-size: 12px;
   font-weight: 400;
   color: var(--item-text-color);
 }
 .status {
-  // height: 30px;
   font-size: 12px;
   font-weight: 500;
 }

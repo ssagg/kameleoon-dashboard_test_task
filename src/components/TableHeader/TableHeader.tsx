@@ -1,7 +1,12 @@
 import Chevron from "../Chevron/Chevron";
 import styles from "./TableHeader.module.scss";
 
-const TableHeader = ({ sortAsc, sortDesc }: any) => {
+interface TableHeaderProps {
+  sortAsc: (title: string) => void;
+  sortDesc: (title: string) => void;
+}
+
+const TableHeader = ({ sortAsc, sortDesc }: TableHeaderProps) => {
   return (
     <div className={styles.tableHeader}>
       <p className={styles.tableTitle}>
