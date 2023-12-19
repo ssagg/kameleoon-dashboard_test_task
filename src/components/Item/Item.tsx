@@ -1,9 +1,9 @@
 import { Site, Type } from "../../models/models";
 
 import Button from "../Button/Button";
-import { REGEXP } from "../../constants/constants";
 import { Status } from "../../models/models";
 import styles from "./Item.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface ItemProps {
   id: number;
@@ -15,8 +15,15 @@ interface ItemProps {
 }
 
 const Item = ({ id, siteId, name, type, status, siteData }: ItemProps) => {
+  const navigate = useNavigate();
   const toLowerCase = (word: string) => {
     return word.charAt(0) + word.substring(1).toLocaleLowerCase();
+  };
+
+  const handleClick = () => {
+    status === "DRAFT"
+      ? navigate(`/finalize/${id}`)
+      : navigate(`/results/${id}`);
   };
 
   return (
@@ -55,7 +62,12 @@ const Item = ({ id, siteId, name, type, status, siteData }: ItemProps) => {
               );
           })}
         </p>
-        <Button siteId={siteId} status={status} id={id} />
+        <Button
+          onClick={handleClick}
+          className={status === "DRAFT" ? "DRAFT" : null}
+        >
+          {status === "DRAFT" ? "Finalize" : "Results"}
+        </Button>
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import styles from "./Search.module.scss";
 
-interface ISearch {
+interface SearchProps {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Search: React.FC<ISearch> = ({ search, setSearch }) => {
+const Search = ({ search, setSearch }: SearchProps) => {
   return (
     <input
       type='search'

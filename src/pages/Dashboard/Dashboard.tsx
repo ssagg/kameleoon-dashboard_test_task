@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Chevron from "../../components/Chevron/Chevron";
 import Item from "../../components/Item/Item";
+import Loading from "../../components/Loading/Loading";
 import NoData from "../../components/NoData/NoData";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { Site } from "../../models/models";
+import TableHeader from "../../components/TableHeader/TableHeader";
 import { Test } from "../../models/models";
 import { sites } from "../../services/api";
 import styles from "./Dashboard.module.scss";
@@ -23,25 +24,37 @@ const Dashboard = ({
   sitesData,
   setSitesData,
 }: DashboardProps) => {
+  const [filteredData, setFilteredData] = useState<Test[]>(data);
+  const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const status = { ONLINE: 1, PAUSED: 2, STOPPED: 3, DRAFT: 4 };
+
   useEffect(() => {
-    if (!data.length)
-      Promise.all([tests(), sites()])
-        .then(([respTests, respSites]: any) => {
+    if (!data.length) {
+      setIsLoading(true);
+      Promise.all([tests(), sites()] as any)
+        .then(([respTests, respSites]) => {
           setData(respTests);
           setSitesData(respSites);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    }
   }, []);
-  const onClick = () => {
-    console.log("reet");
+
+  useEffect(() => {
+    handleSearch("");
+  }, [data]);
+
+  const handleResetButton = () => {
+    setSearch("");
   };
-  const [filteredData, setFilteredData] = useState<Test[]>(data);
 
   const handleSearch = (search: string) => {
     let res = [...data];
     if (search) {
       res = res.filter((item) =>
-        item.name.toLocaleLowerCase().includes(search)
+        item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
       );
       setFilteredData(res);
     } else {
@@ -49,13 +62,7 @@ const Dashboard = ({
     }
   };
 
-  useEffect(() => {
-    handleSearch("");
-  }, [data]);
-
-  const status = { ONLINE: 1, PAUSED: 2, STOPPED: 3, DRAFT: 4 };
-
-  const sortNameAsc = (title: string) => {
+  const sortAsc = (title: string) => {
     if (title === "Name") {
       const sorted: Test[] = data.sort((a: Test, b: Test) =>
         b.name < a.name ? 1 : b.name > a.name ? -1 : 0
@@ -76,7 +83,8 @@ const Dashboard = ({
       setData([...sorted]);
     }
   };
-  const sortNameDesc = (title: string) => {
+
+  const sortDesc = (title: string) => {
     if (title === "Name") {
       const sorted: Test[] = data.sort((a: Test, b: Test) =>
         b.name > a.name ? 1 : b.name < a.name ? -1 : 0
@@ -101,55 +109,31 @@ const Dashboard = ({
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Dashboard</h1>
-      <SearchBar data={filteredData} onSearch={handleSearch} />
-      <div className={styles.wrapper}>
-        {!filteredData.length ? (
-          <NoData onClick={onClick} />
-        ) : (
-          <>
-            <div className={styles.tableHeader}>
-              <p className={styles.tableTitle}>
-                NAME
-                <Chevron
-                  sortNameAsc={sortNameAsc}
-                  sortNameDesc={sortNameDesc}
-                  title={"Name"}
-                />
-              </p>
+      <SearchBar
+        data={filteredData}
+        onSearch={handleSearch}
+        search={search}
+        setSearch={setSearch}
+      />
 
-              <p className={styles.tableTitle}>
-                TYPE
-                <Chevron
-                  sortNameAsc={sortNameAsc}
-                  sortNameDesc={sortNameDesc}
-                  title={"Type"}
-                />
-              </p>
-              <p className={styles.tableTitle}>
-                STATUS
-                <Chevron
-                  sortNameAsc={sortNameAsc}
-                  sortNameDesc={sortNameDesc}
-                  title={"Status"}
-                />
-              </p>
-              <p className={styles.tableTitle}>
-                SITE
-                <Chevron
-                  sortNameAsc={sortNameAsc}
-                  sortNameDesc={sortNameDesc}
-                  title={"Site"}
-                />
-              </p>
-            </div>
-            <div>
-              {filteredData.map((item: Test) => (
-                <Item {...item} key={item.id} siteData={sitesData} />
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className={styles.wrapper}>
+          {!filteredData.length ? (
+            <NoData onClick={handleResetButton} />
+          ) : (
+            <>
+              <TableHeader sortDesc={sortDesc} sortAsc={sortAsc} />
+              <div>
+                {filteredData.map((item: Test) => (
+                  <Item {...item} key={item.id} siteData={sitesData} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

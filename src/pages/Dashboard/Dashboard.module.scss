@@ -14,20 +14,3 @@
   font-weight: 700;
   color: var(--header-text-color);
 }
-
-.tableTitle {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--table-header-text-color);
-}
-.tableHeader {
-  display: grid;
-  grid-template-columns: 414px 125px 116px 123px 95px;
-  // grid-template-columns: repeat(5, 1fr);
-  margin-top: 30px;
-  margin-bottom: 10px;
-  margin-left: 15px;
-}

@@ -9,11 +9,11 @@ import styles from "./SearchBar.module.scss";
 interface SearchBarProps {
   data: Test[];
   onSearch: (search: string) => void;
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SearchBar = ({ data, onSearch }: SearchBarProps) => {
-  const [search, setSearch] = useState("");
-
+const SearchBar = ({ data, onSearch, search, setSearch }: SearchBarProps) => {
   useEffect(() => {
     onSearch(search);
   }, [search]);

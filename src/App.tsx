@@ -13,36 +13,30 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <Layout> */}
-        <Routes>
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
           <Route
-            path='/'
+            index
             element={
-              <Layout>
-                <Outlet />
-              </Layout>
+              <Dashboard
+                data={data}
+                setData={setData}
+                sitesData={sitesData}
+                setSitesData={setSitesData}
+              />
             }
-          >
-            <Route
-              // path='/'
-              index
-              element={
-                <Dashboard
-                  data={data}
-                  setData={setData}
-                  sitesData={sitesData}
-                  setSitesData={setSitesData}
-                />
-              }
-            />
-            <Route path='/results/:testId' element={<Results data={data} />} />
-            <Route
-              path='/finalize/:testId'
-              element={<Finalize data={data} />}
-            />
-          </Route>
-        </Routes>
-      {/* </Layout> */}
+          />
+          <Route path='/results/:testId' element={<Results data={data} />} />
+          <Route path='/finalize/:testId' element={<Finalize data={data} />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

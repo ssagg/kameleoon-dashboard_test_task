@@ -1,28 +1,27 @@
 import { Status } from "../../models/models";
 import styles from "./Button.module.scss";
-import { useNavigate } from "react-router-dom";
 
 interface IButton {
-  siteId?: number;
   status?: Status;
-  id?: number;
-  onClick?: () => void;
+  onClick: () => void;
+  children: React.ReactNode;
+  className?: string | null;
 }
-const Button = ({ status, siteId, id, onClick }: IButton) => {
-  const navigate = useNavigate();
-
+const Button = ({ status, onClick, children, className }: IButton) => {
+  const handleClick = () => {
+    onClick();
+  };
   return (
     <button
-      onClick={() =>
-        status === "DRAFT"
-          ? navigate(`/finalize/${id}`)
-          : navigate(`/results/${id}`)
-      }
+      type='button'
+      onClick={handleClick}
       className={
-        status === "DRAFT" ? styles.buttonFinalize : styles.buttonResults
+        className
+          ? styles.button + " " + styles.gray
+          : styles.button + " " + styles.green
       }
     >
-      {status === "DRAFT" ? "Finalize" : "Results"}
+      {children}
     </button>
   );
 };

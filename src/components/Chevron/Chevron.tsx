@@ -2,12 +2,12 @@ import chevron from "../../assets/Chevron.svg";
 import styles from "./Chevron.module.scss";
 import { useState } from "react";
 
-interface IChevron {
-  sortNameAsc: (title: string) => void;
-  sortNameDesc: (title: string) => void;
+interface ChevronProps {
+  sortAsc: (title: string) => void;
+  sortDesc: (title: string) => void;
   title: string;
 }
-const Chevron = ({ sortNameAsc, sortNameDesc, title }: IChevron) => {
+const Chevron = ({ sortAsc, sortDesc, title }: ChevronProps) => {
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => {
     setToggle(!toggle);
@@ -16,10 +16,10 @@ const Chevron = ({ sortNameAsc, sortNameDesc, title }: IChevron) => {
   return (
     <button
       type='button'
-      className={toggle ? styles.sortButton : styles.sortButton2}
+      className={toggle ? styles.sortButtonUp : styles.sortButtonDown}
       onClick={() => {
         handleToggle();
-        toggle ? sortNameAsc(title) : sortNameDesc(title);
+        toggle ? sortAsc(title) : sortDesc(title);
       }}
     >
       <img src={chevron} className={styles.chevron} alt='Arrow' />
