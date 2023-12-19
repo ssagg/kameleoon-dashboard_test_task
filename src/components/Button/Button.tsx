@@ -1,13 +1,11 @@
-import { Status } from "../../models/models";
 import styles from "./Button.module.scss";
 
-interface IButton {
-  status?: Status;
+interface ButtonProps {
   onClick: () => void;
   children: React.ReactNode;
   className?: string | null;
 }
-const Button = ({ status, onClick, children, className }: IButton) => {
+const Button = ({ onClick, children, className }: ButtonProps) => {
   const handleClick = () => {
     onClick();
   };
