@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Error from "../../components/Error/Error";
 import Item from "../../components/Item/Item";
 import Loading from "../../components/Loading/Loading";
 import NoData from "../../components/NoData/NoData";
@@ -27,6 +28,7 @@ const Dashboard = ({
   const [filteredData, setFilteredData] = useState<Test[]>(data);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const status = { ONLINE: 1, PAUSED: 2, STOPPED: 3, DRAFT: 4 };
 
   useEffect(() => {
@@ -37,7 +39,10 @@ const Dashboard = ({
           setData(respTests);
           setSitesData(respSites);
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          console.log(error);
+          setError(true);
+        })
         .finally(() => setIsLoading(false));
     }
   }, []);
@@ -118,6 +123,8 @@ const Dashboard = ({
 
       {isLoading ? (
         <Loading />
+      ) : error ? (
+        <Error />
       ) : (
         <div className={styles.wrapper}>
           {!filteredData.length ? (
